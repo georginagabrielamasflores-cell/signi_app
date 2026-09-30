@@ -1,0 +1,17 @@
+services:
+  database:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: signi_root_local_password
+      MARIADB_DATABASE: signi_db
+      MARIADB_USER: signi_app
+      MARIADB_PASSWORD: signi_local_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - signi_database_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+
+volumes:
+  signi_database_data:
